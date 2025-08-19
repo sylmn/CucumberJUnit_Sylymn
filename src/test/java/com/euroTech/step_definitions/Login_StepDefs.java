@@ -25,4 +25,12 @@ public class Login_StepDefs {
     public void the_user_enters_mike_s_credentials() {
         System.out.println("The user enters the mike's credentials");
     }
+    @When("The user enters Rosa's credentials")
+    public void the_user_enters_rosa_s_credentials() {
+        System.out.println("The user enters the Rosa's credentials");
+    }
+    @When("The user enters Mansimmo's credentials")
+    public void the_user_enters_mansimmo_s_credentials() {
+        System.out.println("The user enters the Mansimmo's credentials");
+    }
 }
