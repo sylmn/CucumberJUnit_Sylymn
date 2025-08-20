@@ -24,13 +24,13 @@ Feature: Login Function
     When The user enters mike's credentials
     Then The user should be able to see dashboard page
 
-  @wip @qa @smoke @db
+  @qa @smoke @db
   Scenario: Login as Rosa
     Given The user is on the login page
     When The user enters Rosa's credentials
     Then The user should be able to see dashboard page
 
-  @wip
+
   Scenario: Login as Mansimmo
     Given The user is on the login page
     When The user enters Mansimmo's credentials

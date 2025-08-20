@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/euroTech/step_definitions",
         dryRun = false,  //tanimsiz feature'in metodunu veren kisim, false yazilirsa hepsini calistirir
-        tags = "@regression"
+        tags = "@wip"
 )
 public class CukesRunner {
 }
