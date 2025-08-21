@@ -1,6 +1,6 @@
 @regression
 Feature: Dashboard Tests
-  @smoke
+  @smoke @wip
   Scenario: Developers Page Test
     Given The user is on the login page
     When The user enters Solo's credentials
