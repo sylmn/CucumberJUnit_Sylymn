@@ -11,27 +11,27 @@ Feature: Login Function
     When The user enters Solo's credentials
     Then The user should be able to see dashboard page
 
-  @dev @smoke
+  @dev @smoke @wip
   Scenario: Login as User11
     Given The user is on the login page
     When The user enters User11's credentials
-    Then The user should be able to see dashboard page
+    Then The user should be able to see User11's name on the dashboard page
 
 # class task create a scenario for login test with mike
-  @qa @db
+  @qa @db @wip
   Scenario: Login as mike
     Given The user is on the login page
     When The user enters mike's credentials
-    Then The user should be able to see dashboard page
+    Then The user should be able to see mike's name on the dashboard page
 
-  @qa @smoke @db
+  @qa @smoke @db @wip
   Scenario: Login as Rosa
     Given The user is on the login page
     When The user enters Rosa's credentials
-    Then The user should be able to see dashboard page
+    Then The user should be able to see Rosa's page on the dashboard page
 
-
+  @wip
   Scenario: Login as Mansimmo
     Given The user is on the login page
     When The user enters Mansimmo's credentials
-    Then The user should be able to see dashboard page
+    Then The user should be able to see Mansimo's page on the dashboard page
