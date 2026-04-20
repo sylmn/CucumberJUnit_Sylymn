@@ -1,153 +1,77 @@
-# 🥒 Cucumber + Java + Selenium Test Otomasyon Projesi
+# # Cucumber JUnit Selenium Test Automation Project
+This project is a **Test Automation Framework** built using **Java, Selenium, Cucumber (BDD), JUnit, and Maven**.
+It demonstrates automated UI testing with **data-driven testing (Excel integration)**.
 
-Bu proje, Java ile geliştirilmiş ve **Cucumber**, **Selenium WebDriver** ile test otomasyonunu gerçekleştiren, **Maven** üzerinden çalıştırılabilen bir yapıdır. Gherkin diliyle yazılmış senaryolar üzerinden davranış odaklı testler yapılır. Proje, kendi içinde modüler olarak yapılandırılmıştır.
+## Technologies Used
+* Java
+* Selenium WebDriver
+* Cucumber (BDD - Gherkin)
+* JUnit
+* Maven
+* Apache POI (Excel handling)
 
-## 🔧 Kullanılan Teknolojiler
-
-- Java
-- Maven
-- Cucumber
-- Selenium WebDriver
-- Gherkin
-- JUnit
-- Raporlama (Extent Reports veya Allure)
-
-## 📁 Proje Yapısı
-
+## Project Structure
 ```
 src
-└── test
-    ├── java
-    │   ├── runners
-    │   │   └── CukesRunner.java       --> Testleri başlatan ana sınıf
-    │   ├── stepdefinitions
-    │   │   ├── LoginSteps.java        --> Sayfa bazlı adım tanımlamaları
-    │   │   └── SearchSteps.java
-    │   └── utilities
-    │       └── Driver.java            --> Selenium WebDriver yönetimi
-    └── resources
-        └── features
-            ├── login.feature          --> Gherkin senaryoları
-            └── search.feature
+ └── test
+     ├── java
+     │    ├── stepdefinitions
+     │    ├── runners
+     │    ├── pages
+     │    └── utils
+     │
+     └── resources
+          ├── features
+          ├── testdata (Excel files)
+          └── config
 ```
 
-## 🚀 Projeyi Çalıştırma
+## Features
 
-### IntelliJ IDEA ile:
+* BDD approach with Gherkin syntax
+* Page Object Model (POM) design
+* Data-driven testing using Excel
+* Scenario Outline support
+* Reusable step definitions
+* Maven build and execution
 
-1. Maven bağımlılıklarını indir:  
-   `mvn clean install`
-
-2. `CukesRunner.java` dosyasını çalıştır:  
-   Sağ tık > Run ‘CukesRunner’
-
-### Maven üzerinden terminal ile:
-
-```bash
-mvn test
-```
-
-## 📝 Gherkin ile Senaryo Yazımı
-
-Tüm senaryolar `src/test/resources/features` klasöründe yazılır. Örnek:
-
+## Test Scenario Example
 ```gherkin
-Feature: Kullanıcı girişi
+Scenario Outline: Login Test
+  Given The user is on the login page
+  When The user logins with using excel file: "<path>" and "<sheetName>" and <row>
+  Then The user verifies success login
 
-  Scenario: Geçerli bilgilerle giriş
-    Given kullanıcı login sayfasındadır
-    When kullanıcı geçerli "kullaniciAdi" ve "sifre" bilgilerini girer
-    Then kullanıcı ana sayfaya yönlendirilmelidir
+Examples:
+  | path                              | sheetName | row |
+  | src/test/resources/LoginList.xlsx | QaTeam1   | 1   |
 ```
 
-## 🔍 Step Definitions
-
-Her `.feature` dosyasındaki adımların karşılığı `stepdefinitions` paketindeki Java sınıflarında yazılır. Bu sınıflar, sayfa bazlı veya modül bazlı olarak ayrılmıştır.
-
-```java
-@Given("kullanıcı login sayfasındadır")
-public void kullanici_login_sayfasindadir() {
-    Driver.get().get("https://example.com/login");
-}
+## How to Run Tests
+### Using IntelliJ
+* Open the project
+* Run the **Cucumber Runner class**
+### Using Maven
+```bash
+mvn clean test
 ```
 
-## 🖥️ Driver Yönetimi
+## Key Highlights
+* Excel-based login testing (dynamic data input)
+* Multiple scenario executions via Scenario Outline
+* Clean separation of test logic and test data
+* Scalable structure for real-world QA automation
 
-Selenium WebDriver işlemleri `utilities/Driver.java` sınıfı üzerinden kontrol edilir. Singleton yapıdadır ve tarayıcıyı tek noktadan yönetir.
+## Future Improvements
+* Parallel test execution
+* CI/CD integration (Jenkins/GitHub Actions)
+* Advanced reporting (Extent Reports / Allure)
+* API test integration
 
-```java
-public class Driver {
-    private static WebDriver driver;
+## Author
+**Syuleyman**
+QA Engineer | Test Automation
 
-    public static WebDriver get() {
-        if (driver == null) {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
-        }
-        return driver;
-    }
+## Repository
+https://github.com/sylmn/CucumberJUnit_Sylymn.git
 
-    public static void closeDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
-}
-```
-
-## 📊 Raporlama
-
-Testler çalıştırıldığında otomatik olarak rapor üretilir. Rapor klasörü genellikle aşağıdaki yoldadır:
-
-```
-/target/cucumber-reports/
-```
-
-Kullanılan raporlama sistemine göre HTML çıktısı, ekran görüntüsü veya detaylı hata mesajları içerebilir.
-
-## 🧪 Test Koşum Sınıfı: CukesRunner.java
-
-```java
-@Suite
-@IncludeEngines("cucumber")
-@SelectClasspathResource("features")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "stepdefinitions")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
-public class CukesRunner {}
-```
-
-> Gerekli importlar:
-
-```java
-import org.junit.platform.suite.api.*;
-import static io.cucumber.junit.platform.engine.Constants.*;
-```
-
-## 🔄 Hooks (Opsiyonel)
-
-Senaryo öncesi/sonrası işlemler için `Hooks.java` kullanılabilir:
-
-```java
-@Before
-public void setUp() {
-    Driver.get();
-}
-
-@After
-public void tearDown() {
-    Driver.closeDriver();
-}
-```
-
-## 📌 Notlar
-
-- Kodlar, proje modülerliğini koruyacak şekilde yapılandırılmıştır.
-- `features`, `stepdefinitions` ve `runner` yapısı ayrıdır.
-- Senaryolar Türkçe Gherkin sözdizimiyle yazılmıştır.
-- Raporlar test sonrası otomatik olarak oluşturulur.
-- Maven üzerinden kolayca build ve test edilebilir.
-
-## 👤 Hazırlayan
-
-Bu framework, tamamen kişisel ihtiyaçlara özel olarak yapılandırılmıştır ve Java + Cucumber + Selenium üçlüsünü verimli bir şekilde entegre eder.
